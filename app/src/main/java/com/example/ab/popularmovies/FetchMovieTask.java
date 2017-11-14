@@ -1,32 +1,47 @@
 package com.example.ab.popularmovies;
 
+import android.content.Context;
 import android.os.AsyncTask;
+
+import com.example.ab.popularmovies.movie.Movie;
+import com.example.ab.popularmovies.movie.MovieDb;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by ab on 13/11/17.
  */
-class FetchMovieTask extends AsyncTask<String, Void, String[]> {
+class FetchMovieTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
-    MovieAdapter movieAdapter;
+    Context context;
+    private MovieAdapter movieAdapter;
+    private int page;
 
-    public FetchMovieTask(MovieAdapter mMovieAdapter) {
+    public FetchMovieTask(Context context, MovieAdapter mMovieAdapter, int page) {
         this.movieAdapter = mMovieAdapter;
+        this.page = page;
+        this.context = context;
     }
 
     @Override
-    protected String[] doInBackground(String... filters) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+        ((MainActivity) context).showProgressView();
+    }
+
+    @Override
+    protected ArrayList<Movie> doInBackground(String... filters) {
         String filter = filters[0];
-        String[] movies = null;
+        ArrayList<Movie> movies = null;
         try {
-            if (filter.equals(Util.FILTER_PARAM_POPULAR)) {
-                movies = Util.getPopularMovies();
+            if (filter.equals(MovieDb.FILTER_POPULAR)) {
+                movies = MovieDb.getPopularMovies(page);
             }
-            if (filter.equals(Util.FILTER_PARAM_TOPRATED)) {
-                movies = Util.getTopRatedMovies();
+            if (filter.equals(MovieDb.FILTER_TOPRATED)) {
+                movies = MovieDb.getTopRatedMovies(page);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,10 +52,18 @@ class FetchMovieTask extends AsyncTask<String, Void, String[]> {
     }
 
     @Override
-    protected void onPostExecute(String[] paths) {
-        super.onPostExecute(paths);
-        if (paths != null) {
-            movieAdapter.setMovieData(paths);
+    protected void onPostExecute(ArrayList<Movie> movies) {
+        super.onPostExecute(movies);
+        ((MainActivity) context).hideProgressView();
+
+        if (movies != null && page == 1) {
+            movieAdapter.setMovies(movies);
+        }
+        if (page > 1) {
+            ArrayList<Movie> mvs = movieAdapter.getMovies();
+            movieAdapter.addMovies(movies);
         }
     }
+
+
 }

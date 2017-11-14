@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.ab.popularmovies.movie.Movie;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * Created by ab on 14/11/17.
@@ -15,11 +18,21 @@ import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private String[] mMoiveData;
+    ArrayList<Movie> movies;
     private Context context;
 
-    public void setMovieData(String[] movieData) {
-        mMoiveData = movieData;
+
+    public void addMovies(ArrayList<Movie> movies) {
+        this.movies.addAll(movies);
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(ArrayList<Movie> movies) {
+        this.movies = movies;
         notifyDataSetChanged();
     }
 
@@ -33,17 +46,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
-        String movieData = mMoiveData[position];
+        Movie movie = movies.get(position);
         ImageView imageView = holder.mMoviePosterImageView;
         Picasso.with(context)
-                .load("http://image.tmdb.org/t/p/w185" + movieData)
+                .load("http://image.tmdb.org/t/p/w185" + movie.getPoster())
                 .into(imageView);
     }
 
     @Override
     public int getItemCount() {
-        if (mMoiveData == null) return 0;
-        return mMoiveData.length;
+        if (movies == null) return 0;
+        return movies.size();
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -54,4 +67,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
         }
     }
+
+
 }
