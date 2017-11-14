@@ -11,6 +11,12 @@ import java.io.IOException;
  */
 class FetchMovieTask extends AsyncTask<String, Void, String[]> {
 
+    MovieAdapter movieAdapter;
+
+    public FetchMovieTask(MovieAdapter mMovieAdapter) {
+        this.movieAdapter = mMovieAdapter;
+    }
+
     @Override
     protected String[] doInBackground(String... filters) {
         String filter = filters[0];
@@ -33,9 +39,8 @@ class FetchMovieTask extends AsyncTask<String, Void, String[]> {
     @Override
     protected void onPostExecute(String[] paths) {
         super.onPostExecute(paths);
-        for (String path :
-                paths) {
-
+        if (paths != null) {
+            movieAdapter.setMovieData(paths);
         }
     }
 }
