@@ -19,13 +19,14 @@ public class SortMoviesDialogFragment extends DialogFragment {
         builder.setTitle("Sort by")
                 .setItems(R.array.sort_filter_array, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        MainActivity mainActivity = ((MainActivity) getActivity());
                         if (which == 0) {
-                            ((MainActivity) getActivity()).setFilter(MovieDb.FILTER_POPULAR);
-                            ((MainActivity) getActivity()).loadMovies();
+                            mainActivity.setFilter(MovieDb.FILTER_POPULAR);
+                            mainActivity.loadMovies();
                         }
                         if (which == 1) {
-                            ((MainActivity) getActivity()).setFilter(MovieDb.FILTER_TOPRATED);
-                            ((MainActivity) getActivity()).loadMovies();
+                            mainActivity.setFilter(MovieDb.FILTER_TOPRATED);
+                            mainActivity.loadMovies();
                         }
                     }
                 });

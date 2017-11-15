@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 class FetchMovieTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
-    Context context;
+    private Context context;
     private MovieAdapter movieAdapter;
     private int page;
 
@@ -56,14 +56,13 @@ class FetchMovieTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         super.onPostExecute(movies);
         ((MainActivity) context).hideProgressView();
 
-        if (movies != null && page == 1) {
-            movieAdapter.setMovies(movies);
-        }
-        if (page > 1) {
-            ArrayList<Movie> mvs = movieAdapter.getMovies();
-            movieAdapter.addMovies(movies);
+        if (movies != null) {
+            if (page == 1) {
+                movieAdapter.setMovies(movies);
+            } else {
+                movieAdapter.addMovies(movies);
+            }
         }
     }
-
 
 }

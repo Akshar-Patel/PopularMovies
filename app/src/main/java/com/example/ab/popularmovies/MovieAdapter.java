@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.ab.popularmovies.movie.Movie;
+import com.example.ab.popularmovies.movie.MovieDb;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -18,9 +19,13 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
+    private final MovieAdapterOnClickListener onClickListener;
     ArrayList<Movie> movies;
     private Context context;
 
+    public MovieAdapter(MovieAdapterOnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public void addMovies(ArrayList<Movie> movies) {
         this.movies.addAll(movies);
@@ -49,7 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         Movie movie = movies.get(position);
         ImageView imageView = holder.mMoviePosterImageView;
         Picasso.with(context)
-                .load("http://image.tmdb.org/t/p/w185" + movie.getPoster())
+                .load(MovieDb.IMAGE_BASE_URL + movie.getPoster())
                 .into(imageView);
     }
 
@@ -59,12 +64,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         return movies.size();
     }
 
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
+    interface MovieAdapterOnClickListener {
+        void onClick(Movie movie);
+    }
+
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mMoviePosterImageView;
 
         public MovieAdapterViewHolder(View itemView) {
             super(itemView);
-            mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
+            mMoviePosterImageView = itemView.findViewById(R.id.imageView_moviePoster);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onClickListener.onClick(movies.get(getAdapterPosition()));
         }
     }
 

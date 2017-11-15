@@ -1,6 +1,7 @@
 package com.example.ab.popularmovies;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,14 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.ab.popularmovies.movie.Movie;
 import com.example.ab.popularmovies.movie.MovieDb;
 import com.example.ab.popularmovies.util.EndlessRecyclerViewScrollListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickListener {
 
     String filter;
     int page;
-    private RecyclerView mMovieGridRecycleView;
+    private RecyclerView recyclerViewMovieGrid;
     private MovieAdapter mMovieAdapter;
     private ProgressBar progressBar;
 
@@ -35,21 +37,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.progressBar2);
+        progressBar = findViewById(R.id.progressBar);
 
-        mMovieGridRecycleView = findViewById(R.id.rv_movie_grid);
+        recyclerViewMovieGrid = findViewById(R.id.recyclerView_movieGrid);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
-        mMovieGridRecycleView.setLayoutManager(gridLayoutManager);
-        mMovieGridRecycleView.setHasFixedSize(true);
-        mMovieGridRecycleView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+        recyclerViewMovieGrid.setLayoutManager(gridLayoutManager);
+        recyclerViewMovieGrid.setHasFixedSize(true);
+        recyclerViewMovieGrid.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 loadMoreMovies(page);
             }
         });
 
-        mMovieAdapter = new MovieAdapter();
-        mMovieGridRecycleView.setAdapter(mMovieAdapter);
+        mMovieAdapter = new MovieAdapter(this);
+        recyclerViewMovieGrid.setAdapter(mMovieAdapter);
 
         filter = MovieDb.FILTER_POPULAR;
         loadMovies();
@@ -87,5 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
     void hideProgressView() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onClick(Movie movie) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra("movie_detail", movie);
+        startActivity(intent);
     }
 }
