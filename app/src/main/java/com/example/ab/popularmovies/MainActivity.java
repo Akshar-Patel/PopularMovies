@@ -16,20 +16,16 @@ import com.example.ab.popularmovies.movie.Movie;
 import com.example.ab.popularmovies.movie.MovieDb;
 import com.example.ab.popularmovies.util.EndlessRecyclerViewScrollListener;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickListener {
+public class MainActivity extends AppCompatActivity
+        implements MovieAdapter.MovieAdapterOnClickListener {
 
-    String filter;
-    int page;
-    private RecyclerView recyclerViewMovieGrid;
+    private String mSortFilter;
+    private int mPage;
     private MovieAdapter mMovieAdapter;
-    private ProgressBar progressBar;
+    private ProgressBar mProgressBar;
 
-    public String getFilter() {
-        return filter;
-    }
-
-    public void setFilter(String filter) {
-        this.filter = filter;
+    public void setSortFilter(String sortFilter) {
+        this.mSortFilter = sortFilter;
     }
 
     @Override
@@ -37,35 +33,37 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.progressBar);
+        mProgressBar = findViewById(R.id.pb_loading);
 
-        recyclerViewMovieGrid = findViewById(R.id.recyclerView_movieGrid);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
-        recyclerViewMovieGrid.setLayoutManager(gridLayoutManager);
-        recyclerViewMovieGrid.setHasFixedSize(true);
-        recyclerViewMovieGrid.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadMoreMovies(page);
-            }
-        });
+        RecyclerView movieGridRecyclerView = findViewById(R.id.rv_movie_grid);
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+        movieGridRecyclerView.setLayoutManager(gridLayoutManager);
+        movieGridRecyclerView.setHasFixedSize(true);
+        movieGridRecyclerView.addOnScrollListener(
+                new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                        loadMoreMovies(page);
+                    }
+                });
 
         mMovieAdapter = new MovieAdapter(this);
-        recyclerViewMovieGrid.setAdapter(mMovieAdapter);
+        movieGridRecyclerView.setAdapter(mMovieAdapter);
 
-        filter = MovieDb.FILTER_POPULAR;
+        mSortFilter = MovieDb.FILTER_POPULAR;
         loadMovies();
     }
 
     public void loadMovies() {
-        page = 1;
-        new FetchMovieTask(this, mMovieAdapter, page).execute(filter);
+        mPage = 1;
+        new FetchMovieTask(this, mMovieAdapter, mPage).execute(mSortFilter);
     }
 
-    public void loadMoreMovies(int page) {
+    private void loadMoreMovies(int page) {
         page++;
-        this.page = page;
-        new FetchMovieTask(this, mMovieAdapter, page).execute(filter);
+        this.mPage = page;
+        new FetchMovieTask(this, mMovieAdapter, page).execute(mSortFilter);
     }
 
     @Override
@@ -84,11 +82,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     void showProgressView() {
-        progressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     void hideProgressView() {
-        progressBar.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

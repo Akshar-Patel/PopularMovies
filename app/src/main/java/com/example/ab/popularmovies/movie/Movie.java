@@ -3,87 +3,86 @@ package com.example.ab.popularmovies.movie;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by ab on 14/11/17.
- */
-
 public class Movie implements Parcelable {
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
-        }
+    @SuppressWarnings("unused")
+    public static final Creator<Movie> CREATOR =
+            new Creator<Movie>() {
+                @Override
+                public Movie createFromParcel(Parcel source) {
+                    return new Movie(source);
+                }
 
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
-    int id;
-    String title;
-    String poster;
-    Float votesAverage;
-    String releaseDate;
-    String overview;
+                @Override
+                public Movie[] newArray(int size) {
+                    return new Movie[size];
+                }
+            };
+    private int mId;
+    private String mTitle;
+    private String mPoster;
+    private Float mVoteAverage;
+    private String mReleaseDate;
+    private String mOverview;
 
-    public Movie() {
+    Movie() {
     }
 
-    protected Movie(Parcel in) {
-        this.id = in.readInt();
-        this.title = in.readString();
-        this.poster = in.readString();
-        this.votesAverage = (Float) in.readValue(Float.class.getClassLoader());
-        this.releaseDate = in.readString();
-        this.overview = in.readString();
+    private Movie(Parcel in) {
+        this.mId = in.readInt();
+        this.mTitle = in.readString();
+        this.mPoster = in.readString();
+        this.mVoteAverage = (Float) in.readValue(Float.class.getClassLoader());
+        this.mReleaseDate = in.readString();
+        this.mOverview = in.readString();
     }
 
-    public Float getVotesAverage() {
-        return votesAverage;
+    public Float getVoteAverage() {
+        return mVoteAverage;
     }
 
-    public void setVotesAverage(Float votesAverage) {
-        this.votesAverage = votesAverage;
+    void setVoteAverage(Float voteAverage) {
+        this.mVoteAverage = voteAverage;
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        return mReleaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    void setReleaseDate(String releaseDate) {
+        this.mReleaseDate = releaseDate;
     }
 
     public String getOverview() {
-        return overview;
+        return mOverview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    void setOverview(String overview) {
+        this.mOverview = overview;
     }
 
+    @SuppressWarnings("unused")
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public String getPoster() {
-        return poster;
+        return mPoster;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    void setPoster(String poster) {
+        this.mPoster = poster;
     }
 
     @Override
@@ -93,11 +92,11 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.title);
-        dest.writeString(this.poster);
-        dest.writeValue(this.votesAverage);
-        dest.writeString(this.releaseDate);
-        dest.writeString(this.overview);
+        dest.writeInt(this.mId);
+        dest.writeString(this.mTitle);
+        dest.writeString(this.mPoster);
+        dest.writeValue(this.mVoteAverage);
+        dest.writeString(this.mReleaseDate);
+        dest.writeString(this.mOverview);
     }
 }

@@ -13,12 +13,6 @@ import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    TextView textViewTitle;
-    ImageView imageViewPoster;
-    TextView textViewReleaseDate;
-    TextView textViewVoteAverage;
-    TextView textViewOverview;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,23 +27,19 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Movie movie = getIntent().getParcelableExtra("movie_detail");
 
-        textViewTitle = findViewById(R.id.textView_title);
-        textViewTitle.setText(movie.getTitle());
+        TextView titleTextView = findViewById(R.id.tv_title);
+        titleTextView.setText(movie.getTitle());
 
-        imageViewPoster = findViewById(R.id.imageView_poster);
-        Picasso.with(this)
-                .load(MovieDb.IMAGE_BASE_URL + movie.getPoster())
-                .into(imageViewPoster);
+        ImageView posterImageView = findViewById(R.id.iv_poster);
+        Picasso.with(this).load(MovieDb.IMAGE_BASE_URL + movie.getPoster()).into(posterImageView);
 
-        textViewReleaseDate = findViewById(R.id.textView_releaseDate);
-        textViewReleaseDate.setText(movie.getReleaseDate().substring(0, 4));
+        TextView releaseDateTextView = findViewById(R.id.tv_release_date);
+        releaseDateTextView.setText(movie.getReleaseDate().substring(0, 4));
 
-        textViewVoteAverage = findViewById(R.id.textView_voteAverage);
-        textViewVoteAverage.setText(String.valueOf(movie.getVotesAverage()));
+        TextView voteAverageTextView = findViewById(R.id.tv_vote_average);
+        voteAverageTextView.setText(String.valueOf(movie.getVoteAverage()));
 
-        textViewOverview = findViewById(R.id.textView_overview);
-        textViewOverview.setText(movie.getOverview());
+        TextView overViewTextView = findViewById(R.id.tv_overview);
+        overViewTextView.setText(movie.getOverview());
     }
-
-
 }

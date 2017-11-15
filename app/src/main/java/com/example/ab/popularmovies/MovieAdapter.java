@@ -13,75 +13,64 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by ab on 14/11/17.
- */
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private final MovieAdapterOnClickListener onClickListener;
-    ArrayList<Movie> movies;
-    private Context context;
+    private final MovieAdapterOnClickListener mMovieAdapterOnClickListener;
+    private ArrayList<Movie> mMovies;
+    private Context mContext;
 
-    public MovieAdapter(MovieAdapterOnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    MovieAdapter(MovieAdapterOnClickListener onClickListener) {
+        this.mMovieAdapterOnClickListener = onClickListener;
     }
 
-    public void addMovies(ArrayList<Movie> movies) {
-        this.movies.addAll(movies);
+    void addMovies(ArrayList<Movie> movies) {
+        this.mMovies.addAll(movies);
         notifyDataSetChanged();
     }
 
-    public ArrayList<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(ArrayList<Movie> movies) {
-        this.movies = movies;
+    void setMovies(ArrayList<Movie> movies) {
+        this.mMovies = movies;
         notifyDataSetChanged();
     }
 
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View view = LayoutInflater.from(context)
+        mContext = parent.getContext();
+        View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.movie_item, parent, false);
         return new MovieAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
-        Movie movie = movies.get(position);
+        Movie movie = mMovies.get(position);
         ImageView imageView = holder.mMoviePosterImageView;
-        Picasso.with(context)
-                .load(MovieDb.IMAGE_BASE_URL + movie.getPoster())
-                .into(imageView);
+        Picasso.with(mContext).load(MovieDb.IMAGE_BASE_URL + movie.getPoster()).into(imageView);
     }
 
     @Override
     public int getItemCount() {
-        if (movies == null) return 0;
-        return movies.size();
+        if (mMovies == null) return 0;
+        return mMovies.size();
     }
 
     interface MovieAdapterOnClickListener {
         void onClick(Movie movie);
     }
 
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView mMoviePosterImageView;
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
+        final ImageView mMoviePosterImageView;
 
-        public MovieAdapterViewHolder(View itemView) {
+        MovieAdapterViewHolder(View itemView) {
             super(itemView);
-            mMoviePosterImageView = itemView.findViewById(R.id.imageView_moviePoster);
+            mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onClickListener.onClick(movies.get(getAdapterPosition()));
+            mMovieAdapterOnClickListener.onClick(mMovies.get(getAdapterPosition()));
         }
     }
-
-
 }
