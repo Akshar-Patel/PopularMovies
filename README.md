@@ -4,6 +4,7 @@
 
 ---
 #### API Key Insertion
-Insert API Key in MovieDB.java file.
+
+Insert API Key in MovieDb.java file.
 
 Just append key in string constant API_KEY.
