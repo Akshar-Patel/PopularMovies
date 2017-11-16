@@ -9,25 +9,30 @@ import android.support.v7.app.AlertDialog;
 import com.example.ab.popularmovies.movie.MovieDb;
 
 public class SortMoviesDialogFragment extends DialogFragment {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Sort by")
-                .setItems(
+                .setSingleChoiceItems(
                         R.array.sort_filter_array,
+                        0,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity mainActivity = ((MainActivity) getActivity());
                                 if (which == 0) {
                                     mainActivity.setSortFilter(MovieDb.FILTER_POPULAR);
                                     mainActivity.loadMovies();
+                                    dismiss();
                                 }
                                 if (which == 1) {
                                     mainActivity.setSortFilter(MovieDb.FILTER_TOPRATED);
                                     mainActivity.loadMovies();
+                                    dismiss();
                                 }
                             }
                         });
+
         return builder.create();
     }
 }

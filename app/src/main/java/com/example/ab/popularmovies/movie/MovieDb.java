@@ -22,7 +22,7 @@ public class MovieDb {
     private static final String RELEASE_DATE_JSON_KEY = "release_date";
     private static final String OVERVIEW_JSON_KEY = "overview";
 
-    private static final String API_KEY = "?api_key=";//append api key after '='. e.g. ?api_key=111111111
+    private static final String API_KEY = "?api_key=1e4e3b33c1a13c803417d70888c23363";//append api key after '='. e.g. ?api_key=111111111
     private static final String MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/movie/";
     private static final String PAGE_PARAM = "&page=";
 

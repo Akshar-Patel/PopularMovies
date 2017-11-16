@@ -18,14 +18,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private final MovieAdapterOnClickListener mMovieAdapterOnClickListener;
     private ArrayList<Movie> mMovies;
     private Context mContext;
-
     MovieAdapter(MovieAdapterOnClickListener onClickListener) {
         this.mMovieAdapterOnClickListener = onClickListener;
     }
 
-    void addMovies(ArrayList<Movie> movies) {
-        this.mMovies.addAll(movies);
-        notifyDataSetChanged();
+    public ArrayList<Movie> getMovies() {
+        return mMovies;
     }
 
     void setMovies(ArrayList<Movie> movies) {
@@ -33,11 +31,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         notifyDataSetChanged();
     }
 
+    void addMovies(ArrayList<Movie> movies) {
+        this.mMovies.addAll(movies);
+        notifyDataSetChanged();
+    }
+
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.movie_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.movie_item, parent, false);
         return new MovieAdapterViewHolder(view);
     }
 
@@ -45,7 +47,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
         ImageView imageView = holder.mMoviePosterImageView;
-        Picasso.with(mContext).load(MovieDb.IMAGE_BASE_URL + movie.getPoster()).into(imageView);
+        Picasso.with(mContext)
+                .load(MovieDb.IMAGE_BASE_URL + movie.getPoster())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
+                .into(imageView);
+
     }
 
     @Override

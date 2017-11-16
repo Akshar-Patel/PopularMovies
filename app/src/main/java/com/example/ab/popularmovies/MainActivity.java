@@ -16,9 +16,12 @@ import com.example.ab.popularmovies.movie.Movie;
 import com.example.ab.popularmovies.movie.MovieDb;
 import com.example.ab.popularmovies.util.EndlessRecyclerViewScrollListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements MovieAdapter.MovieAdapterOnClickListener {
 
+    private static final String SAVED_STATE_MOVIES = "saved_state_movies";
     private String mSortFilter;
     private int mPage;
     private MovieAdapter mMovieAdapter;
@@ -26,6 +29,12 @@ public class MainActivity extends AppCompatActivity
 
     public void setSortFilter(String sortFilter) {
         this.mSortFilter = sortFilter;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(SAVED_STATE_MOVIES, mMovieAdapter.getMovies());
     }
 
     @Override
@@ -52,7 +61,14 @@ public class MainActivity extends AppCompatActivity
         movieGridRecyclerView.setAdapter(mMovieAdapter);
 
         mSortFilter = MovieDb.FILTER_POPULAR;
-        loadMovies();
+
+        if (savedInstanceState != null) {
+            ArrayList<Movie> movies = savedInstanceState.getParcelableArrayList(SAVED_STATE_MOVIES);
+            mMovieAdapter.setMovies(movies);
+        } else {
+            loadMovies();
+        }
+
     }
 
     public void loadMovies() {
