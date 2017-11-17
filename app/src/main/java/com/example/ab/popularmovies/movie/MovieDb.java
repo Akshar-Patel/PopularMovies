@@ -13,7 +13,7 @@ public class MovieDb {
     public static final String FILTER_POPULAR = "popular";
     public static final String FILTER_TOPRATED = "top_rated";
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185";
-
+    public static final String SAVED_SORT_FILTER = "saved_state_sort_filter";
     private static final String RESULTS_JSON_KEY = "results";
     private static final String ID_JSON_KEY = "id";
     private static final String TITLE_JSON_KEY = "title";
@@ -21,7 +21,6 @@ public class MovieDb {
     private static final String VOTE_AVERAGE_JSON_KEY = "vote_average";
     private static final String RELEASE_DATE_JSON_KEY = "release_date";
     private static final String OVERVIEW_JSON_KEY = "overview";
-
     private static final String API_KEY = "?api_key=1e4e3b33c1a13c803417d70888c23363";//append api key after '='. e.g. ?api_key=111111111
     private static final String MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/movie/";
     private static final String PAGE_PARAM = "&page=";

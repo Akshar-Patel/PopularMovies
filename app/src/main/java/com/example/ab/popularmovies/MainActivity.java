@@ -3,6 +3,7 @@ package com.example.ab.popularmovies;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,16 +17,20 @@ import com.example.ab.popularmovies.movie.Movie;
 import com.example.ab.popularmovies.movie.MovieDb;
 import com.example.ab.popularmovies.util.EndlessRecyclerViewScrollListener;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
         implements MovieAdapter.MovieAdapterOnClickListener {
 
-    private static final String SAVED_STATE_MOVIES = "saved_state_movies";
+    static private ProgressBar mProgressBar;
     private String mSortFilter;
-    private int mPage;
     private MovieAdapter mMovieAdapter;
-    private ProgressBar mProgressBar;
+
+    public static void showProgressView() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    public static void hideProgressView() {
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
 
     public void setSortFilter(String sortFilter) {
         this.mSortFilter = sortFilter;
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(SAVED_STATE_MOVIES, mMovieAdapter.getMovies());
+        outState.putString(MovieDb.SAVED_SORT_FILTER, mSortFilter);
     }
 
     @Override
@@ -60,26 +65,32 @@ public class MainActivity extends AppCompatActivity
         mMovieAdapter = new MovieAdapter(this);
         movieGridRecyclerView.setAdapter(mMovieAdapter);
 
-        mSortFilter = MovieDb.FILTER_POPULAR;
-
         if (savedInstanceState != null) {
-            ArrayList<Movie> movies = savedInstanceState.getParcelableArrayList(SAVED_STATE_MOVIES);
-            mMovieAdapter.setMovies(movies);
+            mSortFilter = savedInstanceState.getString(MovieDb.SAVED_SORT_FILTER);
         } else {
-            loadMovies();
+            mSortFilter = MovieDb.FILTER_POPULAR;
         }
 
+        loadMovies();
     }
 
     public void loadMovies() {
-        mPage = 1;
-        new FetchMovieTask(this, mMovieAdapter, mPage).execute(mSortFilter);
+        loadMoreMovies(0);
     }
 
     private void loadMoreMovies(int page) {
         page++;
-        this.mPage = page;
-        new FetchMovieTask(this, mMovieAdapter, page).execute(mSortFilter);
+        Bundle bundle = new Bundle();
+        bundle.putString("sort_filter", mSortFilter);
+        bundle.putInt("page", page);
+        getLoaderManager()
+                .restartLoader(MovieLoaderManager.MOVIE_LOADER, bundle, new MovieLoaderManager(this, mMovieAdapter));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString(MovieDb.SAVED_SORT_FILTER, mSortFilter);
     }
 
     @Override
@@ -95,14 +106,6 @@ public class MainActivity extends AppCompatActivity
             sortDialogFragment.show(getFragmentManager(), "sort");
         }
         return true;
-    }
-
-    void showProgressView() {
-        mProgressBar.setVisibility(View.VISIBLE);
-    }
-
-    void hideProgressView() {
-        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
