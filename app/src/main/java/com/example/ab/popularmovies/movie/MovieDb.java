@@ -14,6 +14,7 @@ public class MovieDb {
     public static final String FILTER_TOPRATED = "top_rated";
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185";
     public static final String SAVED_SORT_FILTER = "saved_state_sort_filter";
+    public static final String SHARED_PREF_SORT_FILTER = "shared_pref_sort_filter";
     private static final String RESULTS_JSON_KEY = "results";
     private static final String ID_JSON_KEY = "id";
     private static final String TITLE_JSON_KEY = "title";

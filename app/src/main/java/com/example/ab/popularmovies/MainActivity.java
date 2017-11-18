@@ -3,7 +3,6 @@ package com.example.ab.popularmovies;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,7 @@ import com.example.ab.popularmovies.util.EndlessRecyclerViewScrollListener;
 public class MainActivity extends AppCompatActivity
         implements MovieAdapter.MovieAdapterOnClickListener {
 
-    static private ProgressBar mProgressBar;
+    private static ProgressBar mProgressBar;
     private String mSortFilter;
     private MovieAdapter mMovieAdapter;
 
@@ -68,7 +67,12 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState != null) {
             mSortFilter = savedInstanceState.getString(MovieDb.SAVED_SORT_FILTER);
         } else {
-            mSortFilter = MovieDb.FILTER_POPULAR;
+            if (getSharedPreferences("movies_prefs", 0).getInt(MovieDb.SHARED_PREF_SORT_FILTER, 0)
+                    == 0) {
+                mSortFilter = MovieDb.FILTER_POPULAR;
+            } else {
+                mSortFilter = MovieDb.FILTER_TOPRATED;
+            }
         }
 
         loadMovies();
@@ -84,13 +88,10 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("sort_filter", mSortFilter);
         bundle.putInt("page", page);
         getLoaderManager()
-                .restartLoader(MovieLoaderManager.MOVIE_LOADER, bundle, new MovieLoaderManager(this, mMovieAdapter));
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putString(MovieDb.SAVED_SORT_FILTER, mSortFilter);
+                .restartLoader(
+                        MovieLoaderManager.MOVIE_LOADER,
+                        bundle,
+                        new MovieLoaderManager(this, mMovieAdapter));
     }
 
     @Override
