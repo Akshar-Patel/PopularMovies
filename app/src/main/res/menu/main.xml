@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <item
-        android:id="@+id/action_filter"
-        android:icon="@drawable/ic_filter_list_white_24dp"
-        android:orderInCategory="1"
-        android:title="@string/text_sort"
-        app:showAsAction="ifRoom"
-        tools:iconTintMode="add" />
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+  <item
+    android:id="@+id/action_favorite"
+    android:icon="@android:drawable/btn_star_big_on"
+    android:orderInCategory="1"
+    android:title="@string/text_sort"
+    app:showAsAction="ifRoom"
+    tools:iconTintMode="add"/>
+  <item
+    android:id="@+id/action_filter"
+    android:icon="@drawable/ic_filter_list_white_24dp"
+    android:orderInCategory="2"
+    android:title="@string/text_sort"
+    app:showAsAction="ifRoom"
+    tools:iconTintMode="add"/>
 </menu>

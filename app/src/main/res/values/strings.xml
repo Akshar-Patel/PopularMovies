@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
-    <string name="title_activity_movie_detail">Movie Details</string>
-    <string name="text_title">Title</string>
-    <string name="text_release_date">ReleaseDate</string>
-    <string name="text_vote_average">VoteAverage</string>
-    <string name="text_overview">Overview</string>
-    <string name="text_sort">Sort</string>
-    <string name="content_desc_movie_poster">movie poster</string>
+  <string name="app_name">Popular Movies</string>
+  <string name="title_activity_movie_detail">Movie Details</string>
+  <string name="text_title">Title</string>
+  <string name="text_release_date">ReleaseDate</string>
+  <string name="text_vote_average">VoteAverage</string>
+  <string name="text_overview">Overview</string>
+  <string name="text_sort">Sort</string>
+  <string name="content_desc_movie_poster">movie poster</string>
+  <string name="title_activity_favorite_movie">FavoriteMovieActivity</string>
 </resources>

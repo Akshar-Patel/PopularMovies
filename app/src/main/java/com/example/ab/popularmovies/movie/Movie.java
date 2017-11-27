@@ -4,99 +4,99 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable {
-    @SuppressWarnings("unused")
-    public static final Creator<Movie> CREATOR =
-            new Creator<Movie>() {
-                @Override
-                public Movie createFromParcel(Parcel source) {
-                    return new Movie(source);
-                }
 
-                @Override
-                public Movie[] newArray(int size) {
-                    return new Movie[size];
-                }
-            };
-    private int mId;
-    private String mTitle;
-    private String mPoster;
-    private Float mVoteAverage;
-    private String mReleaseDate;
-    private String mOverview;
+  @SuppressWarnings("unused")
+  public static final Creator<Movie> CREATOR =
+      new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+          return new Movie(source);
+        }
 
-    Movie() {
-    }
+        @Override
+        public Movie[] newArray(int size) {
+          return new Movie[size];
+        }
+      };
+  private int mId;
+  private String mTitle;
+  private String mPoster;
+  private Float mVoteAverage;
+  private String mReleaseDate;
+  private String mOverview;
 
-    private Movie(Parcel in) {
-        this.mId = in.readInt();
-        this.mTitle = in.readString();
-        this.mPoster = in.readString();
-        this.mVoteAverage = (Float) in.readValue(Float.class.getClassLoader());
-        this.mReleaseDate = in.readString();
-        this.mOverview = in.readString();
-    }
+  public Movie() {
+  }
 
-    public Float getVoteAverage() {
-        return mVoteAverage;
-    }
+  private Movie(Parcel in) {
+    this.mId = in.readInt();
+    this.mTitle = in.readString();
+    this.mPoster = in.readString();
+    this.mVoteAverage = (Float) in.readValue(Float.class.getClassLoader());
+    this.mReleaseDate = in.readString();
+    this.mOverview = in.readString();
+  }
 
-    void setVoteAverage(Float voteAverage) {
-        this.mVoteAverage = voteAverage;
-    }
+  public int getId() {
+    return mId;
+  }
 
-    public String getReleaseDate() {
-        return mReleaseDate;
-    }
+  public void setId(int id) {
+    this.mId = id;
+  }
 
-    void setReleaseDate(String releaseDate) {
-        this.mReleaseDate = releaseDate;
-    }
+  public Float getVoteAverage() {
+    return mVoteAverage;
+  }
 
-    public String getOverview() {
-        return mOverview;
-    }
+  public void setVoteAverage(Float voteAverage) {
+    this.mVoteAverage = voteAverage;
+  }
 
-    void setOverview(String overview) {
-        this.mOverview = overview;
-    }
+  public String getReleaseDate() {
+    return mReleaseDate;
+  }
 
-    @SuppressWarnings("unused")
-    public int getId() {
-        return mId;
-    }
+  public void setReleaseDate(String releaseDate) {
+    this.mReleaseDate = releaseDate;
+  }
 
-    public void setId(int id) {
-        this.mId = id;
-    }
+  public String getOverview() {
+    return mOverview;
+  }
 
-    public String getTitle() {
-        return mTitle;
-    }
+  public void setOverview(String overview) {
+    this.mOverview = overview;
+  }
 
-    public void setTitle(String title) {
-        this.mTitle = title;
-    }
+  public String getTitle() {
+    return mTitle;
+  }
 
-    public String getPoster() {
-        return mPoster;
-    }
+  public void setTitle(String title) {
+    this.mTitle = title;
+  }
 
-    void setPoster(String poster) {
-        this.mPoster = poster;
-    }
+  public String getPoster() {
+    return mPoster;
+  }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+  public void setPoster(String poster) {
+    this.mPoster = poster;
+  }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mId);
-        dest.writeString(this.mTitle);
-        dest.writeString(this.mPoster);
-        dest.writeValue(this.mVoteAverage);
-        dest.writeString(this.mReleaseDate);
-        dest.writeString(this.mOverview);
-    }
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(this.mId);
+    dest.writeString(this.mTitle);
+    dest.writeString(this.mPoster);
+    dest.writeValue(this.mVoteAverage);
+    dest.writeString(this.mReleaseDate);
+    dest.writeString(this.mOverview);
+  }
 }
