@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie;
+package com.example.ab.popularmovies.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

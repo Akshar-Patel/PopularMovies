@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie.favorite;
+package com.example.ab.popularmovies.favorite;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,21 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import com.example.ab.popularmovies.MovieDetailActivity;
 import com.example.ab.popularmovies.R;
-import com.example.ab.popularmovies.data.MovieContract.FavoriteMovieEntry;
-import com.example.ab.popularmovies.movie.Movie;
-import com.example.ab.popularmovies.movie.MovieDetailActivity;
-import com.example.ab.popularmovies.movie.favorite.FavoriteMovieAdapter.FavoriteMovieAdapterOnClickListener;
+import com.example.ab.popularmovies.api.MovieDb;
+import com.example.ab.popularmovies.db.MovieContract.FavoriteMovieEntry;
+import com.example.ab.popularmovies.favorite.FavoriteMovieAdapter.FavoriteMovieAdapterOnClickListener;
+import com.example.ab.popularmovies.model.Movie;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class FavoriteMovieActivityFragment extends Fragment implements
-    FavoriteMovieAdapterOnClickListener {
+public class FavoriteMovieActivityFragment extends Fragment
+    implements FavoriteMovieAdapterOnClickListener {
 
-  FavoriteMovieAdapter favoriteMovieAdapter;
-  Cursor cursor;
+  private FavoriteMovieAdapter favoriteMovieAdapter;
+  private Cursor cursor;
   private RecyclerView mMovieListRecyclerView;
   private View mFragmentView;
 
@@ -34,33 +31,34 @@ public class FavoriteMovieActivityFragment extends Fragment implements
   public void onResume() {
     super.onResume();
     if (cursor != null) {
-      cursor = getContext().getContentResolver().query(FavoriteMovieEntry.CONTENT_URI,
-          null,
-          null,
-          null,
-          null);
-      favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity(), cursor, this);
-      mMovieListRecyclerView.setAdapter(favoriteMovieAdapter);
+      setupCursor();
+      setupAdapter();
     }
-    Toast.makeText(getActivity(), cursor.getCount() + "", Toast.LENGTH_SHORT).show();
   }
 
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     mFragmentView = inflater.inflate(R.layout.fragment_favorite_movie, container, false);
-    cursor = getContext().getContentResolver().query(FavoriteMovieEntry.CONTENT_URI,
-        null,
-        null,
-        null,
-        null);
-    setUpRecyclerView();
-    favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity(), cursor, this);
-    mMovieListRecyclerView.setAdapter(favoriteMovieAdapter);
+    setupCursor();
+    setupRecyclerview();
+    setupAdapter();
     return mFragmentView;
   }
 
-  private void setUpRecyclerView() {
+  private void setupCursor() {
+    cursor =
+        getContext()
+            .getContentResolver()
+            .query(FavoriteMovieEntry.CONTENT_URI, null, null, null, null);
+  }
+
+  private void setupAdapter() {
+    favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity(), cursor, this);
+    mMovieListRecyclerView.setAdapter(favoriteMovieAdapter);
+  }
+
+  private void setupRecyclerview() {
     mMovieListRecyclerView = mFragmentView.findViewById(R.id.rv_favorite_movie_grid);
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     mMovieListRecyclerView.setLayoutManager(linearLayoutManager);
@@ -70,8 +68,7 @@ public class FavoriteMovieActivityFragment extends Fragment implements
   @Override
   public void onClick(Movie movie) {
     Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-    intent.putExtra("movie_detail", movie);
+    intent.putExtra(MovieDb.PARCEL_MOVIE_DETAIL, movie);
     startActivity(intent);
   }
-
 }

@@ -23,7 +23,7 @@
     </activity>
     <activity
       android:label="@string/title_activity_movie_detail"
-      android:name=".movie.MovieDetailActivity"
+      android:name=".MovieDetailActivity"
       android:parentActivityName=".MainActivity"
       android:theme="@style/AppTheme.NoActionBar"
       tools:ignore="UnusedAttribute">
@@ -33,7 +33,7 @@
     </activity>
     <activity
       android:label="@string/title_activity_favorite_movie"
-      android:name=".movie.favorite.FavoriteMovieActivity"
+      android:name=".favorite.FavoriteMovieActivity"
       android:parentActivityName=".MainActivity"
       android:theme="@style/AppTheme.NoActionBar"
       tools:targetApi="jelly_bean">
@@ -45,7 +45,7 @@
     <provider
       android:authorities="com.example.ab.popularmovies"
       android:exported="false"
-      android:name=".data.MovieContentProvider"/>
+      android:name=".db.MovieContentProvider"/>
 
   </application>
 

@@ -1,14 +1,11 @@
-package com.example.ab.popularmovies.data;
+package com.example.ab.popularmovies.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.ab.popularmovies.data.MovieContract.FavoriteMovieEntry;
+import com.example.ab.popularmovies.db.MovieContract.FavoriteMovieEntry;
 
-/**
- * Created by ab on 25/11/17.
- */
-public class MovieDbHelper extends SQLiteOpenHelper {
+class MovieDbHelper extends SQLiteOpenHelper {
 
   private static final String DATABASE_NAME = "movie.db";
   private static final int DATABASE_VERSION = 1;

@@ -1,11 +1,13 @@
 <resources>
   <string name="app_name">Popular Movies</string>
   <string name="title_activity_movie_detail">Movie Details</string>
-  <string name="text_title">Title</string>
-  <string name="text_release_date">ReleaseDate</string>
-  <string name="text_vote_average">VoteAverage</string>
-  <string name="text_overview">Overview</string>
-  <string name="text_sort">Sort</string>
-  <string name="content_desc_movie_poster">movie poster</string>
+  <string name="content_desc_movie_poster">movie poster image</string>
   <string name="title_activity_favorite_movie">FavoriteMovieActivity</string>
+  <string name="tg_off_save_to_favorites">save to favorites</string>
+  <string name="tg_on_save_to_favorites">saved in favorites</string>
+  <string name="title_menu_item_sort">Sort</string>
+  <string name="title_menu_item_filter">Filter</string>
+  <string name="button_text_trailer1">Trailer 1</string>
+  <string name="button_text_trailer2">Trailer 2</string>
+  <string name="label_reviews">Reviews</string>
 </resources>

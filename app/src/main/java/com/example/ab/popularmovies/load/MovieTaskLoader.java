@@ -1,18 +1,15 @@
-package com.example.ab.popularmovies.movie;
+package com.example.ab.popularmovies.load;
 
 import android.content.AsyncTaskLoader;
 import android.os.Bundle;
-import android.view.View;
 import com.example.ab.popularmovies.MainActivity;
-import com.example.ab.popularmovies.R;
+import com.example.ab.popularmovies.api.MovieDb;
+import com.example.ab.popularmovies.model.Movie;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import org.json.JSONException;
 
-/**
- * Created by ab on 16/11/17.
- */
 class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
 
   private final Bundle mBundle;
@@ -28,7 +25,6 @@ class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
   @Override
   protected void onStartLoading() {
     super.onStartLoading();
-    mMainActivityWeakReference.get().findViewById(R.id.pb_loading).setVisibility(View.VISIBLE);
     if (mMovies != null) {
       deliverResult(mMovies);
     } else {
@@ -38,12 +34,13 @@ class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
 
   @Override
   public ArrayList<Movie> loadInBackground() {
+
     int filter =
         mMainActivityWeakReference
             .get()
             .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
             .getInt(MovieDb.SHARED_PREF_SORT_FILTER, 0);
-    int page = mBundle.getInt("page");
+    int page = mBundle.getInt(MovieDb.BUNDLE_PAGE);
     ArrayList<Movie> movies = null;
     try {
       if (filter == MovieDb.CHOICE_POPULAR) {
@@ -57,6 +54,7 @@ class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
     } catch (JSONException e) {
       e.printStackTrace();
     }
+
     return movies;
   }
 

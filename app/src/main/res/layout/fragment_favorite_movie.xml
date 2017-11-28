@@ -5,7 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.example.ab.popularmovies.movie.favorite.FavoriteMovieActivityFragment"
+  tools:context=".favorite.FavoriteMovieActivityFragment"
   tools:showIn="@layout/activity_favorite_movie">
   <android.support.v7.widget.RecyclerView
     android:id="@+id/rv_favorite_movie_grid"

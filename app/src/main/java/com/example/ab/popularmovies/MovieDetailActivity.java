@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie;
+package com.example.ab.popularmovies;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -10,13 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import com.example.ab.popularmovies.R;
-import com.example.ab.popularmovies.data.MovieContract.FavoriteMovieEntry;
+import com.example.ab.popularmovies.api.MovieDb;
+import com.example.ab.popularmovies.db.MovieContract.FavoriteMovieEntry;
+import com.example.ab.popularmovies.load.ReviewsFetchTask;
+import com.example.ab.popularmovies.load.TrailersFetchTask;
+import com.example.ab.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-  Movie movie;
+  private Movie movie;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
-    movie = getIntent().getParcelableExtra("movie_detail");
+    movie = getIntent().getParcelableExtra(MovieDb.PARCEL_MOVIE_DETAIL);
 
     TextView titleTextView = findViewById(R.id.tv_title);
     titleTextView.setText(movie.getTitle());
@@ -58,27 +61,38 @@ public class MovieDetailActivity extends AppCompatActivity {
     toggle.setOnCheckedChangeListener(
         (buttonView, isChecked) -> {
           if (isChecked) {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(FavoriteMovieEntry.COLUMN_MOVIE_ID, movie.getId());
-            contentValues.put(FavoriteMovieEntry.COLUMN_TITLE, movie.getTitle());
-            contentValues.put(FavoriteMovieEntry.COLUMN_POSTER, movie.getPoster());
-            contentValues.put(FavoriteMovieEntry.COLUMN_VOTES_AVERAGE, movie.getVoteAverage());
-            contentValues.put(FavoriteMovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
-            contentValues.put(FavoriteMovieEntry.COLUMN_OVERVIEW, movie.getOverview());
-
-            getContentResolver().insert(FavoriteMovieEntry.CONTENT_URI, contentValues);
+            saveInFavorites();
           } else {
-            Uri uriToDelete =
-                FavoriteMovieEntry.CONTENT_URI
-                    .buildUpon()
-                    .appendPath(String.valueOf(movie.getId()))
-                    .build();
-            getContentResolver().delete(uriToDelete, null, null);
+            removeFromFavorites();
           }
         });
+
+    new TrailersFetchTask(this).execute(movie.getId());
+    new ReviewsFetchTask(this).execute(movie.getId());
   }
 
-  boolean isSavedInFavorites() {
+  private void saveInFavorites() {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(FavoriteMovieEntry.COLUMN_MOVIE_ID, movie.getId());
+    contentValues.put(FavoriteMovieEntry.COLUMN_TITLE, movie.getTitle());
+    contentValues.put(FavoriteMovieEntry.COLUMN_POSTER, movie.getPoster());
+    contentValues.put(FavoriteMovieEntry.COLUMN_VOTES_AVERAGE, movie.getVoteAverage());
+    contentValues.put(FavoriteMovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
+    contentValues.put(FavoriteMovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+
+    getContentResolver().insert(FavoriteMovieEntry.CONTENT_URI, contentValues);
+  }
+
+  private void removeFromFavorites() {
+    Uri uriToDelete =
+        FavoriteMovieEntry.CONTENT_URI
+            .buildUpon()
+            .appendPath(String.valueOf(movie.getId()))
+            .build();
+    getContentResolver().delete(uriToDelete, null, null);
+  }
+
+  private boolean isSavedInFavorites() {
     Uri uri =
         FavoriteMovieEntry.CONTENT_URI
             .buildUpon()

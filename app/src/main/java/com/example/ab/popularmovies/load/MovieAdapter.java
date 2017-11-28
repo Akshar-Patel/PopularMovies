@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie;
+package com.example.ab.popularmovies.load;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.example.ab.popularmovies.R;
+import com.example.ab.popularmovies.api.MovieDb;
+import com.example.ab.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -24,12 +26,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     return mMovies;
   }
 
-  void setMovies(ArrayList<Movie> movies) {
+  public void setMovies(ArrayList<Movie> movies) {
     this.mMovies = movies;
     notifyDataSetChanged();
   }
 
-  void addMovies(ArrayList<Movie> movies) {
+  public void addMovies(ArrayList<Movie> movies) {
     this.mMovies.addAll(movies);
     notifyDataSetChanged();
   }

@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.data;
+package com.example.ab.popularmovies.db;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -9,20 +9,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.example.ab.popularmovies.data.MovieContract.FavoriteMovieEntry;
+import com.example.ab.popularmovies.db.MovieContract.FavoriteMovieEntry;
 
 /**
  * Created by ab on 26/11/17.
  */
 public class MovieContentProvider extends ContentProvider {
 
-  public static final int MOVIES = 100;
-  public static final int MOVIE_WITH_ID = 101;
+  private static final int MOVIES = 100;
+  private static final int MOVIE_WITH_ID = 101;
 
   private static final UriMatcher sUriMatcher = buildUriMatcher();
-  MovieDbHelper movieDbHelper;
+  private MovieDbHelper movieDbHelper;
 
-  public static UriMatcher buildUriMatcher() {
+  private static UriMatcher buildUriMatcher() {
     UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     uriMatcher.addURI(MovieContract.CONTENT_AUTHORITY, MovieContract.PATH_MOVIES, MOVIES);
@@ -94,7 +94,7 @@ public class MovieContentProvider extends ContentProvider {
   @Override
   public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
     final SQLiteDatabase sqLiteDatabase = movieDbHelper.getWritableDatabase();
-    Uri returnUri;
+    Uri returnUri = null;
 
     int match = sUriMatcher.match(uri);
     switch (match) {
@@ -110,7 +110,7 @@ public class MovieContentProvider extends ContentProvider {
 
     getContext().getContentResolver().notifyChange(uri, null);
 
-    return null;
+    return returnUri;
   }
 
   @Override
@@ -124,7 +124,9 @@ public class MovieContentProvider extends ContentProvider {
         taskDeleted = sqLiteDatabase
             .delete(FavoriteMovieEntry.TABLE_NAME, "movie_id=?", new String[]{movieId});
         break;
-        
+      default:
+        throw new UnsupportedOperationException("Unknown uri " + uri);
+
     }
     getContext().getContentResolver().notifyChange(uri, null);
     return taskDeleted;

@@ -6,16 +6,15 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.ab.popularmovies.movie.Movie;
-import com.example.ab.popularmovies.movie.MovieAdapter;
-import com.example.ab.popularmovies.movie.MovieDetailActivity;
-import com.example.ab.popularmovies.movie.MovieLoaderManager;
-import com.example.ab.popularmovies.movie.SortMoviesDialogFragment;
-import com.example.ab.popularmovies.movie.favorite.FavoriteMovieActivity;
+import com.example.ab.popularmovies.api.MovieDb;
+import com.example.ab.popularmovies.dialog.SortMoviesDialogFragment;
+import com.example.ab.popularmovies.favorite.FavoriteMovieActivity;
+import com.example.ab.popularmovies.load.MovieAdapter;
+import com.example.ab.popularmovies.load.MovieLoaderManager;
+import com.example.ab.popularmovies.model.Movie;
 import com.example.ab.popularmovies.util.EndlessRecyclerViewScrollListener;
 
 public class MainActivity extends AppCompatActivity
@@ -38,8 +37,7 @@ public class MainActivity extends AppCompatActivity
 
   private void setUpRecyclerView() {
     mMovieGridRecyclerView = findViewById(R.id.rv_movie_grid);
-    GridLayoutManager gridLayoutManager =
-        new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
       gridLayoutManager.setSpanCount(3);
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity
   private void loadMoreMovies(int page) {
     page++;
     Bundle bundle = new Bundle();
-    bundle.putInt("page", page);
+    bundle.putInt(MovieDb.BUNDLE_PAGE, page);
     getLoaderManager()
         .restartLoader(
             MovieLoaderManager.MOVIE_LOADER, bundle, new MovieLoaderManager(this, mMovieAdapter));
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity
   @Override
   public void onClick(Movie movie) {
     Intent intent = new Intent(this, MovieDetailActivity.class);
-    intent.putExtra("movie_detail", movie);
+    intent.putExtra(MovieDb.PARCEL_MOVIE_DETAIL, movie);
     startActivity(intent);
   }
 }

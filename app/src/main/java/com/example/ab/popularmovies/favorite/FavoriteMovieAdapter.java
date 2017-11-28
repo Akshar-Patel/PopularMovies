@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie.favorite;
+package com.example.ab.popularmovies.favorite;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,18 +9,15 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.ab.popularmovies.R;
-import com.example.ab.popularmovies.data.MovieContract.FavoriteMovieEntry;
-import com.example.ab.popularmovies.movie.Movie;
+import com.example.ab.popularmovies.db.MovieContract.FavoriteMovieEntry;
+import com.example.ab.popularmovies.model.Movie;
 
-/**
- * Created by ab on 25/11/17.
- */
 public class FavoriteMovieAdapter
     extends RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieHolder> {
 
   private final Context mContext;
   private final Cursor mCursor;
-  private FavoriteMovieAdapterOnClickListener mFavoriteMovieAdapterOnClickListener;
+  private final FavoriteMovieAdapterOnClickListener mFavoriteMovieAdapterOnClickListener;
 
   public FavoriteMovieAdapter(Context context, Cursor cursor,
       FavoriteMovieAdapterOnClickListener favoriteMovieAdapterOnClickListener) {
@@ -56,7 +53,7 @@ public class FavoriteMovieAdapter
 
   public class FavoriteMovieHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
-    TextView movieTitleTv;
+    final TextView movieTitleTv;
 
     public FavoriteMovieHolder(View itemView) {
       super(itemView);

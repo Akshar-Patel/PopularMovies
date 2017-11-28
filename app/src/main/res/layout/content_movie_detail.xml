@@ -6,9 +6,8 @@
   android:layout_height="match_parent"
   android:background="@color/colorPrimary"
   app:layout_behavior="@string/appbar_scrolling_view_behavior"
-  tools:context="com.example.ab.popularmovies.movie.MovieDetailActivity"
+  tools:context="com.example.ab.popularmovies.MovieDetailActivity"
   tools:ignore="Overdraw"
-  tools:layout_editor_absoluteY="81dp"
   tools:showIn="@layout/activity_movie_detail">
 
   <android.support.constraint.ConstraintLayout
@@ -24,12 +23,12 @@
       android:padding="@dimen/header_padding"
       android:background="@color/colorAccent"
       android:gravity="center"
-      android:text="@string/text_title"
       android:textAppearance="@style/TextAppearance.AppCompat.Display1"
       app:layout_constraintBottom_toTopOf="@+id/iv_poster"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"/>
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="title"/>
 
     <ImageView
       android:id="@+id/iv_poster"
@@ -54,13 +53,13 @@
       android:layout_marginStart="@dimen/default_margin"
       android:layout_marginEnd="@dimen/default_margin"
       android:gravity="center"
-      android:text="@string/text_release_date"
       android:textAppearance="@style/TextAppearance.AppCompat.Headline"
       android:textColor="@android:color/darker_gray"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toEndOf="@+id/iv_poster"
-      app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+      app:layout_constraintTop_toBottomOf="@+id/tv_title"
+      tools:text="2017"/>
 
     <TextView
       android:id="@+id/tv_vote_average"
@@ -71,11 +70,67 @@
       android:layout_marginEnd="@dimen/default_margin"
       android:background="@color/yellow"
       android:gravity="center"
-      android:text="@string/text_vote_average"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/iv_poster"
-      app:layout_constraintTop_toBottomOf="@+id/tv_release_date"/>
+      app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
+      tools:text="8.5"/>
+    <ToggleButton
+      android:id="@+id/tb_favorite"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/default_margin_double"
+      android:layout_marginStart="@dimen/default_margin"
+      android:layout_marginEnd="@dimen/default_margin"
+      android:padding="@dimen/default_margin"
+      android:background="@android:color/holo_green_dark"
+      android:checked="false"
+      android:drawableLeft="@drawable/favorite_toggle_button"
+      android:drawableStart="@drawable/favorite_toggle_button"
+      android:textColor="@android:color/white"
+      android:textOff="@string/tg_off_save_to_favorites"
+      android:textOn="@string/tg_on_save_to_favorites"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/iv_poster"
+      app:layout_constraintTop_toBottomOf="@+id/tv_vote_average"/>
+
+    <ProgressBar
+      android:id="@+id/pb_loading_trailers"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:visibility="invisible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/iv_poster"
+      app:layout_constraintTop_toBottomOf="@+id/tb_favorite"/>
+    <Button
+      android:id="@+id/bt_trailer1"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/default_margin"
+      android:layout_marginStart="@dimen/default_margin"
+      android:layout_marginEnd="@dimen/default_margin"
+      android:drawableLeft="@android:drawable/ic_media_play"
+      android:drawableStart="@android:drawable/ic_media_play"
+      android:text="@string/button_text_trailer1"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/iv_poster"
+      app:layout_constraintTop_toBottomOf="@+id/tb_favorite"/>
+    <Button
+      android:id="@+id/bt_trailer2"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/default_margin"
+      android:layout_marginStart="@dimen/default_margin"
+      android:layout_marginEnd="@dimen/default_margin"
+      android:drawableLeft="@android:drawable/ic_media_play"
+      android:drawableStart="@android:drawable/ic_media_play"
+      android:text="@string/button_text_trailer2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/iv_poster"
+      app:layout_constraintTop_toBottomOf="@+id/bt_trailer1"
+      />
 
     <TextView
       android:id="@+id/tv_overview"
@@ -84,32 +139,58 @@
       android:layout_marginTop="@dimen/default_margin"
       android:layout_marginStart="@dimen/default_margin"
       android:layout_marginEnd="@dimen/default_margin"
-      android:text="@string/text_overview"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@android:color/darker_gray"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/iv_poster"/>
-    <ToggleButton
-      android:id="@+id/tb_favorite"
+      app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+      tools:text="this is an overview of the movie."/>
+
+    <View
+      android:id="@+id/horizontal_rule"
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:layout_margin="@dimen/default_margin"
+      android:background="@android:color/darker_gray"
+      app:layout_constraintTop_toBottomOf="@+id/tv_overview"/>
+    <TextView
+      android:id="@+id/tv_label_reviews"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginEnd="8dp"
-      android:padding="8dp"
-      android:background="@android:color/holo_green_dark"
-      android:checked="false"
-      android:drawableLeft="@drawable/favorite_button"
-      android:drawableStart="@drawable/favorite_button"
-      android:text="ToggleButton"
-      android:textColor="@android:color/white"
-      android:textOff="save to favorites"
-      android:textOn="saved in favorites"
+      android:layout_marginTop="@dimen/default_margin"
+      android:layout_marginStart="@dimen/default_margin"
+      android:layout_marginEnd="@dimen/default_margin"
+      android:padding="@dimen/default_padding"
+      android:text="@string/label_reviews"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@android:color/darker_gray"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/iv_poster"
-      app:layout_constraintTop_toBottomOf="@+id/tv_vote_average"/>
-
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/horizontal_rule"
+      tools:text="reviews_label"/>
+    <ProgressBar
+      android:id="@+id/pb_loading_reviews"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:visibility="invisible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_label_reviews"/>
+    <TextView
+      android:id="@+id/tv_reviews"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/default_margin"
+      android:layout_marginStart="@dimen/default_margin"
+      android:layout_marginEnd="@dimen/default_margin"
+      android:padding="@dimen/default_padding"
+      android:textColor="@android:color/darker_gray"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_label_reviews"
+      tools:text="reviews"/>
 
   </android.support.constraint.ConstraintLayout>
 </ScrollView>

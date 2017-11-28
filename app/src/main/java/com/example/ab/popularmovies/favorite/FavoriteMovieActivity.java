@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie.favorite;
+package com.example.ab.popularmovies.favorite;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;

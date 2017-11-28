@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.movie;
+package com.example.ab.popularmovies.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import com.example.ab.popularmovies.MainActivity;
 import com.example.ab.popularmovies.R;
+import com.example.ab.popularmovies.api.MovieDb;
 
 public class SortMoviesDialogFragment extends DialogFragment {
 
@@ -20,13 +21,13 @@ public class SortMoviesDialogFragment extends DialogFragment {
         .setSingleChoiceItems(
             R.array.sort_filter_array,
             getActivity()
-                .getSharedPreferences("movies_prefs", 0)
+                .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
                 .getInt(MovieDb.SHARED_PREF_SORT_FILTER, MovieDb.CHOICE_POPULAR),
             (dialog, which) -> {
               mainActivity = ((MainActivity) getActivity());
-              if (which == 0) {
+              if (which == MovieDb.CHOICE_POPULAR) {
                 mainActivity
-                    .getSharedPreferences("movies_prefs", 0)
+                    .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
                     .edit()
                     .putInt(MovieDb.SHARED_PREF_SORT_FILTER, MovieDb.CHOICE_POPULAR)
                     .apply();
@@ -34,9 +35,9 @@ public class SortMoviesDialogFragment extends DialogFragment {
                 mainActivity.loadMovies();
                 dismiss();
               }
-              if (which == 1) {
+              if (which == MovieDb.CHOICE_TOP_RATED) {
                 mainActivity
-                    .getSharedPreferences("movies_prefs", 0)
+                    .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
                     .edit()
                     .putInt(MovieDb.SHARED_PREF_SORT_FILTER, MovieDb.CHOICE_TOP_RATED)
                     .apply();

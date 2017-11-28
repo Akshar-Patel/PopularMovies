@@ -1,4 +1,4 @@
-package com.example.ab.popularmovies.data;
+package com.example.ab.popularmovies.db;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -6,8 +6,8 @@ import android.provider.BaseColumns;
 public class MovieContract {
 
   static final String CONTENT_AUTHORITY = "com.example.ab.popularmovies";
-  static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
   static final String PATH_MOVIES = "movies";
+  private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
   private MovieContract() {
   }
