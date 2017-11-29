@@ -1,7 +1,7 @@
 package com.example.ab.popularmovies.load;
 
-import android.content.AsyncTaskLoader;
 import android.os.Bundle;
+import android.support.v4.content.AsyncTaskLoader;
 import com.example.ab.popularmovies.MainActivity;
 import com.example.ab.popularmovies.api.MovieDb;
 import com.example.ab.popularmovies.model.Movie;
@@ -27,6 +27,7 @@ class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
     super.onStartLoading();
     if (mMovies != null) {
       deliverResult(mMovies);
+
     } else {
       forceLoad();
     }
@@ -41,6 +42,7 @@ class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
             .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
             .getInt(MovieDb.SHARED_PREF_SORT_FILTER, 0);
     int page = mBundle.getInt(MovieDb.BUNDLE_PAGE);
+
     ArrayList<Movie> movies = null;
     try {
       if (filter == MovieDb.CHOICE_POPULAR) {
@@ -54,7 +56,6 @@ class MovieTaskLoader extends AsyncTaskLoader<ArrayList<Movie>> {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-
     return movies;
   }
 

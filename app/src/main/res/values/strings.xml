@@ -2,7 +2,7 @@
   <string name="app_name">Popular Movies</string>
   <string name="title_activity_movie_detail">Movie Details</string>
   <string name="content_desc_movie_poster">movie poster image</string>
-  <string name="title_activity_favorite_movie">FavoriteMovieActivity</string>
+  <string name="title_activity_favorite_movie">Favorites</string>
   <string name="tg_off_save_to_favorites">save to favorites</string>
   <string name="tg_on_save_to_favorites">saved in favorites</string>
   <string name="title_menu_item_sort">Sort</string>

@@ -1,8 +1,8 @@
 package com.example.ab.popularmovies.load;
 
-import android.app.LoaderManager;
-import android.content.Loader;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.View;
 import com.example.ab.popularmovies.MainActivity;
 import com.example.ab.popularmovies.R;

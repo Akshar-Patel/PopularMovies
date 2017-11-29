@@ -1,5 +1,6 @@
 package com.example.ab.popularmovies.api;
 
+import com.example.ab.popularmovies.BuildConfig;
 import com.example.ab.popularmovies.model.Movie;
 import com.example.ab.popularmovies.util.Util;
 import java.io.IOException;
@@ -11,7 +12,9 @@ import org.json.JSONObject;
 public class MovieDb {
 
   public static final String PARCEL_MOVIE_DETAIL = "movie_detail";
+  public static final String BUNDLE_MOVIES = "movie_detail";
   public static final String BUNDLE_PAGE = "page";
+  public static final String BUNDLE_NEXT_PAGE = "next_page";
   public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185";
   public static final String SHARED_PREF_SORT_FILTER = "shared_pref_sort_filter";
   public static final String MOVIES_PREFS = "movies_prefs";
@@ -29,10 +32,7 @@ public class MovieDb {
   private static final String CONTENT_JSON_KEY = "content";
   private static final String YOUTUBE_JSON_KEY = "youtube";
   private static final String SOURCE_JSON_KEY = "source";
-  private static final String API_KEY =
-      "?api_key=";
-  // append api key after '='.
-  // e.g. ?api_key=111111111
+  private static final String API_KEY = "?api_key=" + BuildConfig.MOVIE_DB_API_KEY;
   private static final String MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/movie/";
   private static final String PAGE_PARAM = "&page=";
 

@@ -1,10 +1,11 @@
 package com.example.ab.popularmovies.favorite;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,7 @@ import com.example.ab.popularmovies.model.Movie;
 public class FavoriteMovieActivityFragment extends Fragment
     implements FavoriteMovieAdapterOnClickListener {
 
-  private FavoriteMovieAdapter favoriteMovieAdapter;
-  private Cursor cursor;
+  private Cursor mCursor;
   private RecyclerView mMovieListRecyclerView;
   private View mFragmentView;
 
@@ -30,7 +30,7 @@ public class FavoriteMovieActivityFragment extends Fragment
   @Override
   public void onResume() {
     super.onResume();
-    if (cursor != null) {
+    if (mCursor != null) {
       setupCursor();
       setupAdapter();
     }
@@ -47,21 +47,26 @@ public class FavoriteMovieActivityFragment extends Fragment
   }
 
   private void setupCursor() {
-    cursor =
+    mCursor =
         getContext()
             .getContentResolver()
             .query(FavoriteMovieEntry.CONTENT_URI, null, null, null, null);
   }
 
   private void setupAdapter() {
-    favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity(), cursor, this);
+    FavoriteMovieAdapter favoriteMovieAdapter = new FavoriteMovieAdapter(getActivity(), mCursor,
+        this);
     mMovieListRecyclerView.setAdapter(favoriteMovieAdapter);
   }
 
   private void setupRecyclerview() {
     mMovieListRecyclerView = mFragmentView.findViewById(R.id.rv_favorite_movie_grid);
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-    mMovieListRecyclerView.setLayoutManager(linearLayoutManager);
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+
+    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+      gridLayoutManager.setSpanCount(3);
+    }
+    mMovieListRecyclerView.setLayoutManager(gridLayoutManager);
     mMovieListRecyclerView.setHasFixedSize(true);
   }
 

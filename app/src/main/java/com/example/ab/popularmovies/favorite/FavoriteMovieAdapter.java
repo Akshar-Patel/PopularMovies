@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 import com.example.ab.popularmovies.R;
+import com.example.ab.popularmovies.api.MovieDb;
 import com.example.ab.popularmovies.db.MovieContract.FavoriteMovieEntry;
 import com.example.ab.popularmovies.model.Movie;
+import com.squareup.picasso.Picasso;
 
 public class FavoriteMovieAdapter
     extends RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieHolder> {
@@ -19,7 +21,7 @@ public class FavoriteMovieAdapter
   private final Cursor mCursor;
   private final FavoriteMovieAdapterOnClickListener mFavoriteMovieAdapterOnClickListener;
 
-  public FavoriteMovieAdapter(Context context, Cursor cursor,
+  FavoriteMovieAdapter(Context context, Cursor cursor,
       FavoriteMovieAdapterOnClickListener favoriteMovieAdapterOnClickListener) {
     mContext = context;
     mCursor = cursor;
@@ -28,17 +30,22 @@ public class FavoriteMovieAdapter
 
   @Override
   public FavoriteMovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(mContext).inflate(R.layout.favorite_movie_item, parent, false);
+    View view = LayoutInflater.from(mContext).inflate(R.layout.movie_item, parent, false);
     return new FavoriteMovieHolder(view);
   }
 
   @Override
   public void onBindViewHolder(FavoriteMovieHolder holder, int position) {
-    String title = null;
+    String poster = null;
     if (mCursor.moveToPosition(position)) {
-      title = mCursor.getString(mCursor.getColumnIndex(FavoriteMovieEntry.COLUMN_TITLE));
+      poster = mCursor.getString(mCursor.getColumnIndex(FavoriteMovieEntry.COLUMN_POSTER));
     }
-    holder.movieTitleTv.setText(title);
+    ImageView imageView = holder.mMoviePosterImageView;
+    Picasso.with(mContext)
+        .load(MovieDb.IMAGE_BASE_URL + poster)
+        .placeholder(R.drawable.placeholder)
+        .error(R.drawable.error)
+        .into(imageView);
   }
 
   @Override
@@ -53,11 +60,11 @@ public class FavoriteMovieAdapter
 
   public class FavoriteMovieHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
-    final TextView movieTitleTv;
+    final ImageView mMoviePosterImageView;
 
-    public FavoriteMovieHolder(View itemView) {
+    FavoriteMovieHolder(View itemView) {
       super(itemView);
-      movieTitleTv = itemView.findViewById(R.id.tv_movie_title);
+      mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_poster);
       itemView.setOnClickListener(this);
     }
 

@@ -20,7 +20,7 @@ public class MovieContentProvider extends ContentProvider {
   private static final int MOVIE_WITH_ID = 101;
 
   private static final UriMatcher sUriMatcher = buildUriMatcher();
-  private MovieDbHelper movieDbHelper;
+  private MovieDbHelper mMovieDbHelper;
 
   private static UriMatcher buildUriMatcher() {
     UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -34,7 +34,7 @@ public class MovieContentProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    movieDbHelper = new MovieDbHelper(getContext());
+    mMovieDbHelper = new MovieDbHelper(getContext());
     return true;
   }
 
@@ -46,7 +46,7 @@ public class MovieContentProvider extends ContentProvider {
       @Nullable String selection,
       @Nullable String[] selectionArgs,
       @Nullable String sortOrder) {
-    final SQLiteDatabase sqLiteDatabase = movieDbHelper.getWritableDatabase();
+    final SQLiteDatabase sqLiteDatabase = mMovieDbHelper.getWritableDatabase();
     Cursor returnCursor = null;
 
     int match = sUriMatcher.match(uri);
@@ -93,7 +93,7 @@ public class MovieContentProvider extends ContentProvider {
   @Nullable
   @Override
   public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-    final SQLiteDatabase sqLiteDatabase = movieDbHelper.getWritableDatabase();
+    final SQLiteDatabase sqLiteDatabase = mMovieDbHelper.getWritableDatabase();
     Uri returnUri = null;
 
     int match = sUriMatcher.match(uri);
@@ -115,7 +115,7 @@ public class MovieContentProvider extends ContentProvider {
 
   @Override
   public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-    final SQLiteDatabase sqLiteDatabase = movieDbHelper.getWritableDatabase();
+    final SQLiteDatabase sqLiteDatabase = mMovieDbHelper.getWritableDatabase();
     int taskDeleted = 0;
     int match = sUriMatcher.match(uri);
     switch (match) {

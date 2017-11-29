@@ -65,5 +65,6 @@ public class ReviewsFetchTask extends AsyncTask<Integer, Void, ArrayList<String>
         .get()
         .findViewById(R.id.tv_reviews)
         .setVisibility(View.VISIBLE);
+    mMovieDetailActivityWeakReference.get().setReviews(strings);
   }
 }

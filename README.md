@@ -5,6 +5,6 @@
 ---
 #### API Key Insertion
 
-Insert API Key in api.MovieDb.java file.
+Insert API Key in <your_home_directory>/.gradle/gradle.properties file as follows.
 
-Just append key in string constant API_KEY.
+MovieDbApiKey="<your_key>"

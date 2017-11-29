@@ -10,7 +10,7 @@ import com.example.ab.popularmovies.api.MovieDb;
 
 public class SortMoviesDialogFragment extends DialogFragment {
 
-  private MainActivity mainActivity;
+  private MainActivity mMainActivity;
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -24,25 +24,25 @@ public class SortMoviesDialogFragment extends DialogFragment {
                 .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
                 .getInt(MovieDb.SHARED_PREF_SORT_FILTER, MovieDb.CHOICE_POPULAR),
             (dialog, which) -> {
-              mainActivity = ((MainActivity) getActivity());
+              mMainActivity = ((MainActivity) getActivity());
               if (which == MovieDb.CHOICE_POPULAR) {
-                mainActivity
+                mMainActivity
                     .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
                     .edit()
                     .putInt(MovieDb.SHARED_PREF_SORT_FILTER, MovieDb.CHOICE_POPULAR)
                     .apply();
 
-                mainActivity.loadMovies();
+                mMainActivity.loadMovies();
                 dismiss();
               }
               if (which == MovieDb.CHOICE_TOP_RATED) {
-                mainActivity
+                mMainActivity
                     .getSharedPreferences(MovieDb.MOVIES_PREFS, 0)
                     .edit()
                     .putInt(MovieDb.SHARED_PREF_SORT_FILTER, MovieDb.CHOICE_TOP_RATED)
                     .apply();
 
-                mainActivity.loadMovies();
+                mMainActivity.loadMovies();
                 dismiss();
               }
             });

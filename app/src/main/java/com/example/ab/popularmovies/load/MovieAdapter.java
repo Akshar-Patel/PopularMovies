@@ -62,6 +62,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     return mMovies.size();
   }
 
+  public void clearItems() {
+    mMovies = null;
+  }
+
   public interface MovieAdapterOnClickListener {
 
     void onClick(Movie movie);
