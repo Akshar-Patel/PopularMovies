@@ -1,6 +1,6 @@
 #### (Udacity Android Developer Nanodegree Project 1 and 2)
 # Popular Movies
-### An app to allow users to discover the most popular movies.
+### An app to allow users to discover the most popular movies. It displays a scrolling grid of movie trailers, launches a details screen whenever a particular movie is selected, allows users to save favorites, play trailers, and read user reviews.
 
 ---
 
