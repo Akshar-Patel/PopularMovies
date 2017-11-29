@@ -1,3 +1,4 @@
+#### (Udacity Android Developer Nanodegree Project 1 and 2)
 # Popular Movies
 ### An app to allow users to discover the most popular movies.
 
