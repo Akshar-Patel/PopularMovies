@@ -10,7 +10,7 @@
 * Tools and OS : Android Studio, Ubuntu
 * Platform: Android 4.0+
 * Modules: Movies, Favorites
-* Lines of Code:  16547
+* Lines of Code:  1904
 * Duration: 1 Week (NOV 2017)
 
 ### Screenshots
